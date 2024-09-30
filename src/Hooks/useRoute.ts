@@ -13,6 +13,13 @@ export const useRoute = () => {
       },
     },
     {
+      title: 'Calendar Picker with Modal',
+      iconName: 'calendar-month',
+      onPress: function () {
+        navigateToRoute(routeMap.calendarWithModal);
+      },
+    },
+    {
       title: 'Date Picker',
       iconName: 'clock-edit-outline',
       onPress: function () {

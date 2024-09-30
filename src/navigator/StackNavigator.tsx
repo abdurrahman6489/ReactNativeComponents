@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {routeMap} from './routeMap';
 import {useColors} from '../config/useColors';
 import DatePickerScreen from '../screens/DatePickerScreen';
+import CalendarScreenInModal from '../screens/CalendarScreenInModal';
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -36,6 +37,11 @@ const StackNavigator = () => {
         name={routeMap.datePicker}
         component={DatePickerScreen}
         options={{title: 'Date Picker'}}
+      />
+      <Stack.Screen
+        name={routeMap.calendarWithModal}
+        component={CalendarScreenInModal}
+        options={{title: 'Calendar In Modal'}}
       />
     </Stack.Navigator>
   );

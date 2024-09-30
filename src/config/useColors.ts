@@ -4,6 +4,7 @@ export const useColors = () => {
   const theme = useTheme();
   return {
     primary: theme.colors.primary,
+    secondary: theme.colors.secondary,
     dark,
     light,
     lightGray,

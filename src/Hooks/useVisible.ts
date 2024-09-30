@@ -1,7 +1,7 @@
 import {useState} from 'react';
 
-export const useVisible = () => {
-  const [isVisible, setIsVisible] = useState(false);
+export const useVisible = (initialStatus = false) => {
+  const [isVisible, setIsVisible] = useState(() => initialStatus);
 
   const open = () => setIsVisible(true);
   const close = () => setIsVisible(false);

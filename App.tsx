@@ -36,6 +36,7 @@ function App(): React.JSX.Element {
 
   const backgroundStyle: Partial<StyleProp<ViewStyle>> = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
   };
 
   return (
@@ -43,8 +44,8 @@ function App(): React.JSX.Element {
       <NavigationContainer>
         <SafeAreaView style={backgroundStyle}>
           <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <StackNavigator />
         </SafeAreaView>
-        <StackNavigator />
       </NavigationContainer>
     </PaperProvider>
   );
