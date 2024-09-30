@@ -7,6 +7,7 @@ import {useVisible} from '../Hooks/useVisible';
 import {getDefaultContainerStyle} from '../Utils/defaultStyles';
 import {useColors} from '../config/useColors';
 import {Text} from 'react-native-paper';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const CalendarScreenInModal = () => {
   const calendarVisibility = useVisible();

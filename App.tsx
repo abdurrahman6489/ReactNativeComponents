@@ -21,6 +21,7 @@ import {PaperProvider} from 'react-native-paper';
 import {DefaultTheme} from 'react-native-paper';
 import StackNavigator from './src/navigator/StackNavigator';
 import {primaryColor} from './src/config/colors';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const customTheme = {
   ...DefaultTheme,
@@ -40,14 +41,18 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <PaperProvider theme={customTheme}>
-      <NavigationContainer>
-        <SafeAreaView style={backgroundStyle}>
-          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-          <StackNavigator />
-        </SafeAreaView>
-      </NavigationContainer>
-    </PaperProvider>
+    <GestureHandlerRootView>
+      <PaperProvider theme={customTheme}>
+        <NavigationContainer>
+          <SafeAreaView style={backgroundStyle}>
+            <StatusBar
+              barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            />
+            <StackNavigator />
+          </SafeAreaView>
+        </NavigationContainer>
+      </PaperProvider>
+    </GestureHandlerRootView>
   );
 }
 

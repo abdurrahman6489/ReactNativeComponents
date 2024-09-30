@@ -6,13 +6,13 @@ import SelectMonth from './components/SelectMonth';
 type monthListProps = {
   monthsArray: string[];
   monthInInitialDate: number;
-  handleMonthOnPress: (monthIndex: number) => void;
+  handleOnMonthPress: (monthIndex: number) => void;
 };
 
 const MonthsList = ({
   monthsArray,
   monthInInitialDate,
-  handleMonthOnPress,
+  handleOnMonthPress,
 }: monthListProps) => {
   return (
     <ScrollView horizontal style={{marginVertical: 10}}>
@@ -23,7 +23,7 @@ const MonthsList = ({
             key={`${month}/${index}`}
             isMonthSelected={isMonthSelected}
             monthName={month.substring(0, 3)}
-            onMonthPress={() => handleMonthOnPress(index)}
+            onMonthPress={() => handleOnMonthPress(index)}
           />
         );
       })}

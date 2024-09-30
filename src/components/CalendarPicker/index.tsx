@@ -1,5 +1,6 @@
-import {View, Text, Animated} from 'react-native';
+import {View, Text, Animated, Easing} from 'react-native';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 import {
   createYearList,
   DEFAULT_ENDING_YEAR,
@@ -17,7 +18,7 @@ import MonthNavigator from './MonthNavigator';
 import DaysList from './DaysList';
 import WeekContainer from './WeekContainer';
 import DayContainer from './DayContainer';
-import {isSameDate} from '../../Utils/utilFunctions';
+import {isSameDate, printInReadableFormat} from '../../Utils/utilFunctions';
 import YearNavigator from './YearNavigator';
 import YearList from './YearList';
 import DefaultFooter, {DefaultFooterProps} from './DefaultFooter';
@@ -55,6 +56,7 @@ const AppCalendarPicker = ({
     ending: DEFAULT_ENDING_YEAR,
   });
   const scaleAnim = useRef(new Animated.Value(0)).current;
+  const translateXAnim = useRef(new Animated.Value(0)).current;
   const monthListVisibility = useVisible();
   const yearListVisibility = useVisible();
   const dayInInitialDate = initialDateToRender.getDate();
@@ -91,6 +93,34 @@ const AppCalendarPicker = ({
     [yearInInitialDate, monthInInitialDate],
   );
 
+  const getMonthAnimationFn = (callback: () => void, value: number) => {
+    const animateFn = () => {
+      Animated.timing(translateXAnim, {
+        toValue: value,
+        duration: 500,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }).start(() => {
+        callback();
+      });
+
+      translateXAnim.setValue(-value);
+
+      Animated.timing(translateXAnim, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.ease,
+        useNativeDriver: true,
+      }).start();
+    };
+    return animateFn;
+  };
+
+  const handleGoToNextMonths = (callback: () => void) => {
+    const animateFn = getMonthAnimationFn(callback, -400);
+    animateFn();
+  };
+
   const goToNextMonth = () => {
     const newDate =
       monthInInitialDate === 11
@@ -98,6 +128,11 @@ const AppCalendarPicker = ({
         : new Date(yearInInitialDate, monthInInitialDate + 1, 1);
     setInitialDateToRender(newDate);
     onMonthPress(newDate);
+  };
+
+  const handleGoToPreviousMonths = (callback: () => void) => {
+    const animateFn = getMonthAnimationFn(callback, 400);
+    animateFn();
   };
 
   const goToPreviousMonth = () => {
@@ -109,10 +144,21 @@ const AppCalendarPicker = ({
     onMonthPress(newDate);
   };
 
-  const handleMonthOnPress = (monthIndex: number) => {
-    const newDate = new Date(yearInInitialDate, monthIndex, 1);
-    setInitialDateToRender(newDate);
-    onMonthPress(newDate);
+  const handleOnMonthPress = (monthIndex: number) => {
+    const callbackFn = () => {
+      const newDate = new Date(yearInInitialDate, monthIndex, 1);
+      setInitialDateToRender(newDate);
+      onMonthPress(newDate);
+    };
+    const shouldGoToNextMonth = monthIndex > monthInInitialDate;
+    const shouldGoToPrevMonth = monthIndex < monthInInitialDate;
+    const callbackFnToCall = shouldGoToNextMonth
+      ? () => handleGoToNextMonths(callbackFn)
+      : shouldGoToPrevMonth
+      ? () => handleGoToPreviousMonths(callbackFn)
+      : () => callbackFn();
+
+    callbackFnToCall();
   };
 
   const handleDatePress = (day: string) => {
@@ -141,6 +187,15 @@ const AppCalendarPicker = ({
       dayInInitialDate,
     );
     onSelectDate(newDate);
+  };
+
+  const handleSwipe = (event: any) => {
+    const {translationX} = event.nativeEvent;
+    if (translationX > 50) {
+      handleGoToPreviousMonths(goToPreviousMonth);
+    } else if (translationX <= -50) {
+      handleGoToNextMonths(goToNextMonth);
+    }
   };
 
   useEffect(() => {
@@ -185,7 +240,7 @@ const AppCalendarPicker = ({
           style={{transform: [{scale: scaleAnim}], paddingHorizontal: 3}}
           key={'monthList'}>
           <MonthsList
-            handleMonthOnPress={handleMonthOnPress}
+            handleOnMonthPress={handleOnMonthPress}
             monthInInitialDate={monthInInitialDate}
             monthsArray={monthsArray}
           />
@@ -196,51 +251,58 @@ const AppCalendarPicker = ({
         monthInInitialDate={monthInInitialDate}
         yearInInitialDate={yearInInitialDate}
         onMonthPress={monthListVisibility.toggle}
-        goToNextMonth={goToNextMonth}
-        goToPreviousMonth={goToPreviousMonth}
+        goToNextMonth={() => handleGoToNextMonths(goToNextMonth)}
+        goToPreviousMonth={() => handleGoToPreviousMonths(goToPreviousMonth)}
       />
-      <View style={{paddingHorizontal: 8}}>
-        <DaysList daysArray={daysArray} />
-        {monthlyArray.map((weeklyArray, weekIndex) => {
-          return (
-            <WeekContainer key={`${weekIndex}-weekList`}>
-              {weeklyArray.map((day, index) => (
-                <DayContainer
-                  key={`${day}/${index}`}
-                  day={day}
-                  isSelected={isSameDate(
-                    initialDateToRender,
-                    new Date(
-                      yearInInitialDate,
-                      monthInInitialDate,
-                      Number(day),
-                    ),
-                  )}
-                  onDayPress={handleDatePress}
-                />
-              ))}
-            </WeekContainer>
-          );
-        })}
 
-        {!isFooterRequired ? (
-          <></>
-        ) : !renderCustomFooter ? (
-          <DefaultFooter
-            cancelText="Cancel"
-            submitText="Submit"
-            onCancel={onCancel}
-            onSubmit={handleSelectDate}
-          />
-        ) : (
-          renderCustomFooter({
-            cancelText: 'Cancel',
-            submitText: 'Submit',
-            onCancel: onCancel,
-            onSubmit: handleSelectDate,
-          })
-        )}
-      </View>
+      <PanGestureHandler onEnded={handleSwipe}>
+        <Animated.View
+          style={{
+            paddingHorizontal: 8,
+            transform: [{translateX: translateXAnim}],
+          }}>
+          <DaysList daysArray={daysArray} />
+          {monthlyArray.map((weeklyArray, weekIndex) => {
+            return (
+              <WeekContainer key={`${weekIndex}-weekList`}>
+                {weeklyArray.map((day, index) => (
+                  <DayContainer
+                    key={`${day}/${index}`}
+                    day={day}
+                    isSelected={isSameDate(
+                      initialDateToRender,
+                      new Date(
+                        yearInInitialDate,
+                        monthInInitialDate,
+                        Number(day),
+                      ),
+                    )}
+                    onDayPress={handleDatePress}
+                  />
+                ))}
+              </WeekContainer>
+            );
+          })}
+
+          {!isFooterRequired ? (
+            <></>
+          ) : !renderCustomFooter ? (
+            <DefaultFooter
+              cancelText="Cancel"
+              submitText="Submit"
+              onCancel={onCancel}
+              onSubmit={handleSelectDate}
+            />
+          ) : (
+            renderCustomFooter({
+              cancelText: 'Cancel',
+              submitText: 'Submit',
+              onCancel: onCancel,
+              onSubmit: handleSelectDate,
+            })
+          )}
+        </Animated.View>
+      </PanGestureHandler>
     </>
   );
 };
