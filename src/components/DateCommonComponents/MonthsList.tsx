@@ -1,7 +1,6 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
-import AppChip from '../AppChip';
-import SelectMonth from './components/SelectMonth';
+import SelectMonth from './SelectMonth';
 
 type monthListProps = {
   monthsArray: string[];

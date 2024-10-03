@@ -16,9 +16,15 @@ const DefaultFooter = ({
   onSubmit,
   submitText,
 }: DefaultFooterProps) => {
+  const handleOnCancel = () => {
+    onCancel();
+  };
   return (
     <View style={styles.footerStyle}>
-      <AppButton style={styles.footerBtnStyle} onPress={onCancel} mode="text">
+      <AppButton
+        style={styles.footerBtnStyle}
+        onPress={handleOnCancel}
+        mode="text">
         {cancelText}
       </AppButton>
       <AppButton

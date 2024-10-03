@@ -1,15 +1,6 @@
-import {
-  StyleSheet,
-  Text,
-  TextStyle,
-  Touchable,
-  TouchableHighlight,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, Text, TextStyle, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useColors} from '../../../config/useColors';
+import {useColors} from '../../config/useColors';
 
 type SelectMonthProps = {
   monthName: string;
@@ -22,10 +13,10 @@ const SelectMonth = ({
   isMonthSelected,
   onMonthPress,
 }: SelectMonthProps) => {
-  const {dark, light, primary, secondary} = useColors();
+  const {primary, lightModeColor, darkModeColor} = useColors();
   const selectedMonthStyle: TextStyle = isMonthSelected
-    ? {backgroundColor: primary, color: light}
-    : {color: dark};
+    ? {backgroundColor: primary, color: lightModeColor}
+    : {color: darkModeColor};
   return (
     <TouchableOpacity style={[styles.month]} onPress={() => onMonthPress()}>
       <Text style={[styles.defaultMonthNameStyle, selectedMonthStyle]}>

@@ -1,12 +1,17 @@
 import {useTheme} from 'react-native-paper';
-import {dark, light, lightGray} from './colors';
+import {useIsDarkMode} from '../Hooks/useIsDarkMode';
+import {dark, light, lightGray, lightGrayInDark} from './colors';
 export const useColors = () => {
   const theme = useTheme();
+  const isDark = useIsDarkMode();
+
   return {
     primary: theme.colors.primary,
     secondary: theme.colors.secondary,
-    dark,
-    light,
-    lightGray,
+    light: light,
+    dark: dark,
+    darkModeColor: isDark ? light : dark,
+    lightModeColor: isDark ? dark : light,
+    lightGray: isDark ? lightGrayInDark : lightGray,
   };
 };

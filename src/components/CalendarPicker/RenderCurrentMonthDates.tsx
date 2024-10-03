@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
-import WeekContainer from './WeekContainer';
+import WeekContainer from '../DateCommonComponents/WeekContainer';
 import DayContainer from './DayContainer';
 
 type RenderCurrentMonthDatesProps = {

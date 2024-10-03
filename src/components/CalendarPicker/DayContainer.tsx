@@ -22,16 +22,19 @@ const DayContainer = ({
   isDisabled = false,
   onDayPress,
 }: dayContainerProps) => {
-  const {primary, dark, light, lightGray} = useColors();
+  const {primary, light, lightGray, darkModeColor} = useColors();
   const WrapperComponent = isDisabled ? Pressable : TouchableOpacity;
 
   const dateStyle: ViewStyle =
     isSelected && !isDisabled ? {backgroundColor: primary} : {};
-  const dateTextStyle: TextStyle = isSelected ? {color: light} : {color: dark};
+  const dateTextStyle: TextStyle = isSelected
+    ? {color: light}
+    : {color: darkModeColor};
   const disabledTextStyle: TextStyle = isDisabled ? {color: lightGray} : {};
 
   const handleDayPress = () => {
     if (!day || isDisabled) return;
+    console.log({day});
     onDayPress(day);
   };
 

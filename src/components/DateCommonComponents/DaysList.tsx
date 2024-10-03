@@ -1,15 +1,19 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {useColors} from '../../config/useColors';
 
 type daysListProps = {
   daysArray: string[];
 };
 
 const DaysList = ({daysArray}: daysListProps) => {
+  const {darkModeColor} = useColors();
   return (
     <View style={styles.daysHeaderContainer} key={'daysList'}>
       {daysArray.map((day, index) => (
-        <Text key={`${day}/${index}`} style={[styles.dayStyle]}>
+        <Text
+          key={`${day}/${index}`}
+          style={[styles.dayStyle, {color: darkModeColor}]}>
           {day}
         </Text>
       ))}

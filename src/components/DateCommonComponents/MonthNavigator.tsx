@@ -2,6 +2,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import AppIconButton from '../AppIconButton';
 import {getDefaultFlexStyles} from '../../Utils/defaultStyles';
+import {useColors} from '../../config/useColors';
 
 type MonthNavigatorProps = {
   monthsArray: string[];
@@ -20,6 +21,7 @@ const MonthNavigator = ({
   goToNextMonth,
   goToPreviousMonth,
 }: MonthNavigatorProps) => {
+  const {darkModeColor} = useColors();
   return (
     <View style={styles.monthContainer} key={'month'}>
       <AppIconButton
@@ -27,7 +29,9 @@ const MonthNavigator = ({
         size={20}
         onPress={goToPreviousMonth}
       />
-      <Text style={styles.month} onPress={onMonthPress}>
+      <Text
+        style={[styles.month, {color: darkModeColor}]}
+        onPress={onMonthPress}>
         {monthsArray[monthInInitialDate]}, {yearInInitialDate}
       </Text>
       <AppIconButton icon={'arrow-right'} size={20} onPress={goToNextMonth} />

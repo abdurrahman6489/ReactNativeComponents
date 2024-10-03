@@ -3,6 +3,7 @@ import React from 'react';
 import {useRoute} from '../Hooks/useRoute';
 import AppButton from '../components/AppButton';
 import {getDefaultContainerStyle} from '../Utils/defaultStyles';
+import {useColors} from '../config/useColors';
 const RenderRouteBtn = ({
   title,
   iconName,
@@ -23,8 +24,9 @@ const RenderRouteBtn = ({
 
 const Home = () => {
   const routeArray = useRoute();
+  const {lightModeColor} = useColors();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: lightModeColor}]}>
       <FlatList
         data={routeArray}
         renderItem={({item}) => <RenderRouteBtn {...item} />}

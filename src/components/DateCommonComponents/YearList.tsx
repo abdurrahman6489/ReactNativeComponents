@@ -1,6 +1,6 @@
 import {FlatList} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import SelectYear from './components/SelectYear';
+import SelectYear from '../CalendarPicker/components/SelectYear';
 import AppDivider from '../AppDivider';
 
 type YearListProps = {

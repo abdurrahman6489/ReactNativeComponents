@@ -4,8 +4,10 @@ import {getDefaultContainerStyle} from '../Utils/defaultStyles';
 import AppDatePicker from '../components/AppDatePicker';
 import {useVisible} from '../Hooks/useVisible';
 import AppButton from '../components/AppButton';
+import {useColors} from '../config/useColors';
 
 const DatePickerScreen = () => {
+  const {lightModeColor} = useColors();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const {
     close: closeDatePicker,
@@ -17,7 +19,7 @@ const DatePickerScreen = () => {
     closeDatePicker();
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {backgroundColor: lightModeColor}]}>
       <AppButton onPress={openDatePicker}>
         Selected Date : {selectedDate.toDateString()}
       </AppButton>

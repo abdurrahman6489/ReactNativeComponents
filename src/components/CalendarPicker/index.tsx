@@ -10,19 +10,19 @@ import {
   findTheLastDateOfTheMonth,
   getTheCalendarArray,
   INITIAL_YEARS_COUNT,
-} from './utilFunctions';
-import {daysArray, monthsArray} from './constants';
-import MonthsList from './MonthsList';
+} from '../../Utils/DateUtilFunctions';
+import {daysArray, monthsArray} from '../../constants/dateComponentConstants';
+import MonthsList from '../DateCommonComponents/MonthsList';
 import {useVisible} from '../../Hooks/useVisible';
-import MonthNavigator from './MonthNavigator';
-import DaysList from './DaysList';
+import MonthNavigator from '../DateCommonComponents/MonthNavigator';
+import DaysList from '../DateCommonComponents/DaysList';
 import {isSameDate} from '../../Utils/utilFunctions';
 import YearNavigator from './YearNavigator';
-import YearList from './YearList';
-import {DefaultFooterProps} from './DefaultFooter';
+import YearList from '../DateCommonComponents/YearList';
+import {DefaultFooterProps} from '../DateCommonComponents/DefaultFooter';
 import ShowSelectedDate from './components/ShowSelectedDate';
 import RenderCurrentMonthDates from './RenderCurrentMonthDates';
-import FooterWrapper from './FooterWrapper';
+import FooterWrapper from '../DateCommonComponents/FooterWrapper';
 
 type CustomDateElementProps = {
   date: Date;

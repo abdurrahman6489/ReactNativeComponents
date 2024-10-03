@@ -6,7 +6,6 @@ import {routeMap} from './routeMap';
 import {useColors} from '../config/useColors';
 import DatePickerScreen from '../screens/DatePickerScreen';
 import CalendarScreenInModal from '../screens/CalendarScreenInModal';
-import DateRangeScreenInModal from '../screens/DateRangeScreenInModal';
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -43,11 +42,6 @@ const StackNavigator = () => {
         name={routeMap.calendarWithModal}
         component={CalendarScreenInModal}
         options={{title: 'Calendar In Modal'}}
-      />
-      <Stack.Screen
-        name={routeMap.dateRangePickerWithModal}
-        component={DateRangeScreenInModal}
-        options={{title: 'Date Range In Modal'}}
       />
     </Stack.Navigator>
   );

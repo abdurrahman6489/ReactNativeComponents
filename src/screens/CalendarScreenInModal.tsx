@@ -10,7 +10,7 @@ import {Text} from 'react-native-paper';
 
 const CalendarScreenInModal = () => {
   const calendarVisibility = useVisible();
-  const {light} = useColors();
+  const {lightModeColor, darkModeColor} = useColors();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const onSelectDate = (date: Date) => {
     setSelectedDate(date);
@@ -24,7 +24,7 @@ const CalendarScreenInModal = () => {
 
   return (
     <>
-      <View style={styles.container}>
+      <View style={[styles.container, {backgroundColor: lightModeColor}]}>
         <AppButton onPress={calendarVisibility.open}>{'Select Date'}</AppButton>
         <AppModal
           visible={calendarVisibility.isVisible}
@@ -32,7 +32,7 @@ const CalendarScreenInModal = () => {
           contentContainerStyle={[
             styles.contentContainerStyle,
             {
-              backgroundColor: light,
+              backgroundColor: lightModeColor,
             },
           ]}>
           <AppCalendarPicker
@@ -47,6 +47,7 @@ const CalendarScreenInModal = () => {
             textAlign: 'center',
             fontSize: 20,
             fontWeight: '300',
+            color: darkModeColor,
           }}>
           Selected Date : {selectedDate.toDateString()}
         </Text>

@@ -20,16 +20,20 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {PaperProvider} from 'react-native-paper';
 import {DefaultTheme} from 'react-native-paper';
 import StackNavigator from './src/navigator/StackNavigator';
-import {primaryColor} from './src/config/colors';
+import {primaryColor, primaryColorInDarkMode} from './src/config/colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-const customTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: primaryColor,
-    primarContainer: primaryColor,
-  },
+const getCustomTheme = (isDarkMode: boolean) => {
+  console.log('from get custom theme', {isDarkMode});
+  const customTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: !isDarkMode ? primaryColor : primaryColorInDarkMode,
+      primarContainer: primaryColor,
+    },
+  };
+  return customTheme;
 };
 
 function App(): React.JSX.Element {
@@ -40,9 +44,11 @@ function App(): React.JSX.Element {
     flex: 1,
   };
 
+  console.log({backgroundStyle});
+
   return (
     <GestureHandlerRootView>
-      <PaperProvider theme={customTheme}>
+      <PaperProvider theme={getCustomTheme(isDarkMode)}>
         <NavigationContainer>
           <SafeAreaView style={backgroundStyle}>
             <StatusBar
