@@ -3,4 +3,5 @@ export const routeMap = {
   calendar: 'calendar',
   datePicker: 'datePicker',
   calendarWithModal: 'calendarWithModal',
+  dateRangePickerWithModal: 'dateRangePickerWithModal',
 };

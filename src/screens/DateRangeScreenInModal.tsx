@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import AppCalendarPicker from '../components/CalendarPicker';
+import AppDateRangePicker from '../components/CalendarPicker/DateRangePicker';
 import AppButton from '../components/AppButton';
 import AppModal from '../components/AppModal';
 import {useVisible} from '../Hooks/useVisible';
@@ -8,7 +8,7 @@ import {getDefaultContainerStyle} from '../Utils/defaultStyles';
 import {useColors} from '../config/useColors';
 import {Text} from 'react-native-paper';
 
-const CalendarScreenInModal = () => {
+const DateRangeScreenInModal = () => {
   const calendarVisibility = useVisible();
   const {light} = useColors();
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -35,7 +35,7 @@ const CalendarScreenInModal = () => {
               backgroundColor: light,
             },
           ]}>
-          <AppCalendarPicker
+          <AppDateRangePicker
             date={selectedDate}
             onSelectDate={onSelectDate}
             onCancel={onCancel}
@@ -54,7 +54,7 @@ const CalendarScreenInModal = () => {
     </>
   );
 };
-export default CalendarScreenInModal;
+export default DateRangeScreenInModal;
 
 const styles = StyleSheet.create({
   container: {...getDefaultContainerStyle().container},

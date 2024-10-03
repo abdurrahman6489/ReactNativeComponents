@@ -31,7 +31,7 @@ type CustomDateElementProps = {
   onDayPress: (date: Date) => void;
 };
 
-type AppCalendarPickerProps = {
+type AppDateRangeProps = {
   date: Date;
   initialDate?: Date;
   isFooterRequired?: boolean;
@@ -49,7 +49,7 @@ type AppCalendarPickerProps = {
     | null;
 };
 
-const AppCalendarPicker = ({
+const AppDateRangePicker = ({
   initialDate = new Date(),
   isFooterRequired = true,
   getShouldDateDisabled = (date: Date) => false,
@@ -60,7 +60,7 @@ const AppCalendarPicker = ({
   onMonthPress = (date: Date) => {},
   onYearPress = (date: Date) => {},
   renderCustomDayElement = null,
-}: AppCalendarPickerProps) => {
+}: AppDateRangeProps) => {
   const [initialDateToRender, setInitialDateToRender] = useState(
     () => initialDate,
   );
@@ -326,4 +326,4 @@ const AppCalendarPicker = ({
   );
 };
 
-export default AppCalendarPicker;
+export default AppDateRangePicker;
