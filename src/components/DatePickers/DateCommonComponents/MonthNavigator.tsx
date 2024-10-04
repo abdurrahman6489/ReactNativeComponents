@@ -1,8 +1,8 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import AppIconButton from '../AppIconButton';
-import {getDefaultFlexStyles} from '../../Utils/defaultStyles';
-import {useColors} from '../../config/useColors';
+import AppIconButton from '../../AppIconButton';
+import {getDefaultFlexStyles} from '../../../Utils/defaultStyles';
+import {useColors} from '../../../config/useColors';
 
 type MonthNavigatorProps = {
   monthsArray: string[];

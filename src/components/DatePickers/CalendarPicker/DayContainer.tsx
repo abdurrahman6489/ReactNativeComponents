@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import React from 'react';
-import {useColors} from '../../config/useColors';
+import {useColors} from '../../../config/useColors';
 
 type dayContainerProps = {
   day: string;
@@ -34,7 +34,6 @@ const DayContainer = ({
 
   const handleDayPress = () => {
     if (!day || isDisabled) return;
-    console.log({day});
     onDayPress(day);
   };
 

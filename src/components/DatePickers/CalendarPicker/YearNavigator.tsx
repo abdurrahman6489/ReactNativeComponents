@@ -1,6 +1,6 @@
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import {useColors} from '../../config/useColors';
+import {useColors} from '../../../config/useColors';
 
 type YearNavigatorProps = {
   currentYear: number;

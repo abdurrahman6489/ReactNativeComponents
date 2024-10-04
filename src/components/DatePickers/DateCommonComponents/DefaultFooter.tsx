@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import AppButton from '../AppButton';
-import {getDefaultFlexStyles} from '../../Utils/defaultStyles';
+import AppButton from '../../AppButton';
+import {getDefaultFlexStyles} from '../../../Utils/defaultStyles';
 
 export type DefaultFooterProps = {
   submitText: string;

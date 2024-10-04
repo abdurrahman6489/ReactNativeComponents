@@ -10,13 +10,16 @@ import {
   findTheLastDateOfTheMonth,
   getTheCalendarArray,
   INITIAL_YEARS_COUNT,
-} from '../../Utils/DateUtilFunctions';
-import {daysArray, monthsArray} from '../../constants/dateComponentConstants';
+  isSameDate,
+} from '../Utils/DateUtilFunctions';
+import {
+  daysArray,
+  monthsArray,
+} from '../../../constants/dateComponentConstants';
 import MonthsList from '../DateCommonComponents/MonthsList';
-import {useVisible} from '../../Hooks/useVisible';
+import {useVisible} from '../../../Hooks/useVisible';
 import MonthNavigator from '../DateCommonComponents/MonthNavigator';
 import DaysList from '../DateCommonComponents/DaysList';
-import {isSameDate} from '../../Utils/utilFunctions';
 import YearNavigator from './YearNavigator';
 import YearList from '../DateCommonComponents/YearList';
 import {DefaultFooterProps} from '../DateCommonComponents/DefaultFooter';

@@ -24,7 +24,6 @@ import {primaryColor, primaryColorInDarkMode} from './src/config/colors';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const getCustomTheme = (isDarkMode: boolean) => {
-  console.log('from get custom theme', {isDarkMode});
   const customTheme = {
     ...DefaultTheme,
     colors: {
@@ -43,8 +42,6 @@ function App(): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     flex: 1,
   };
-
-  console.log({backgroundStyle});
 
   return (
     <GestureHandlerRootView>

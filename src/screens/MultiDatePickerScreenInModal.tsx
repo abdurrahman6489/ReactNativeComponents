@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import AppCalendarPicker from '../components/DatePickers/CalendarPicker';
+import AppMultiDatePicker from '../components/DatePickers/CalendarPicker/MultiDatePicker';
 import AppButton from '../components/AppButton';
 import AppModal from '../components/AppModal';
 import {useVisible} from '../Hooks/useVisible';
@@ -8,17 +8,17 @@ import {getDefaultContainerStyle} from '../Utils/defaultStyles';
 import {useColors} from '../config/useColors';
 import {Text} from 'react-native-paper';
 
-const CalendarScreenInModal = () => {
+const MultiDatePickerScreenInModal = () => {
   const calendarVisibility = useVisible();
   const {lightModeColor, darkModeColor} = useColors();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const onSelectDate = (date: Date) => {
-    setSelectedDate(date);
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
+  const onSelectDate = (dates: Date[]) => {
+    setSelectedDates([...dates]);
     calendarVisibility.close();
   };
 
   const onCancel = () => {
-    setSelectedDate(new Date());
+    setSelectedDates([]);
     calendarVisibility.close();
   };
 
@@ -35,10 +35,10 @@ const CalendarScreenInModal = () => {
               backgroundColor: lightModeColor,
             },
           ]}>
-          <AppCalendarPicker
-            date={selectedDate}
-            onSelectDate={onSelectDate}
+          <AppMultiDatePicker
+            dates={selectedDates}
             onCancel={onCancel}
+            onSelectDate={onSelectDate}
           />
         </AppModal>
         <Text
@@ -49,13 +49,13 @@ const CalendarScreenInModal = () => {
             fontWeight: '300',
             color: darkModeColor,
           }}>
-          Selected Date : {selectedDate.toDateString()}
+          Selected Dates : {selectedDates.length}
         </Text>
       </View>
     </>
   );
 };
-export default CalendarScreenInModal;
+export default MultiDatePickerScreenInModal;
 
 const styles = StyleSheet.create({
   container: {...getDefaultContainerStyle().container},

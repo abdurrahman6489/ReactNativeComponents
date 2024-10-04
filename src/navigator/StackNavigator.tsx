@@ -1,11 +1,9 @@
 import React from 'react';
-import Home from '../screens/Home';
-import CalendarScreen from '../screens/CalendarScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {routeMap} from './routeMap';
 import {useColors} from '../config/useColors';
-import DatePickerScreen from '../screens/DatePickerScreen';
-import CalendarScreenInModal from '../screens/CalendarScreenInModal';
+
+import {ScreenList} from './ScreensList';
 
 const Stack = createNativeStackNavigator();
 const StackNavigator = () => {
@@ -23,26 +21,14 @@ const StackNavigator = () => {
         headerTintColor: light,
         headerTitleAlign: 'center',
       }}>
-      <Stack.Screen
-        name={routeMap.home}
-        component={Home}
-        options={{title: 'Home'}}
-      />
-      <Stack.Screen
-        name={routeMap.calendar}
-        component={CalendarScreen}
-        options={{title: 'Calendar Picker'}}
-      />
-      <Stack.Screen
-        name={routeMap.datePicker}
-        component={DatePickerScreen}
-        options={{title: 'Date Picker'}}
-      />
-      <Stack.Screen
-        name={routeMap.calendarWithModal}
-        component={CalendarScreenInModal}
-        options={{title: 'Calendar In Modal'}}
-      />
+      {ScreenList.map(({name, Component, options}) => (
+        <Stack.Screen
+          key={name}
+          name={name}
+          component={Component}
+          options={options}
+        />
+      ))}
     </Stack.Navigator>
   );
 };

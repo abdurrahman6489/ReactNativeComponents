@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text} from 'react-native';
 import React from 'react';
-import AppDivider from '../../AppDivider';
-import {useColors} from '../../../config/useColors';
+import AppDivider from '../../../AppDivider';
+import {useColors} from '../../../../config/useColors';
 
 type ShowSelectedDateProps = {
   selectedDate: Date;

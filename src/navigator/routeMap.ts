@@ -3,5 +3,6 @@ export const routeMap = {
   calendar: 'calendar',
   datePicker: 'datePicker',
   calendarWithModal: 'calendarWithModal',
+  multiCalendarWithModal: 'multiCalendarWithModal',
   dateRangePickerWithModal: 'dateRangePickerWithModal',
 };

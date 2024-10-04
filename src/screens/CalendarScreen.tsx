@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import AppCalendarPicker from '../components/CalendarPicker';
+import AppCalendarPicker from '../components/DatePickers/CalendarPicker';
 import {useColors} from '../config/useColors';
 import {StyleSheet, View} from 'react-native';
 

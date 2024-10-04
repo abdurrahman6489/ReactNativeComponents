@@ -1,3 +1,7 @@
+export const DEFAULT_STARTING_YEAR = 1900;
+export const DEFAULT_ENDING_YEAR = 2100;
+export const INITIAL_YEARS_COUNT = DEFAULT_ENDING_YEAR - DEFAULT_STARTING_YEAR;
+
 export const findTheIndexOfDayOfTheMonth = (
   year: number,
   month: number,
@@ -70,10 +74,6 @@ export const getTheCalendarArray = (
   return monthlyCalendarArray;
 };
 
-export const DEFAULT_STARTING_YEAR = 1900;
-export const DEFAULT_ENDING_YEAR = 2100;
-export const INITIAL_YEARS_COUNT = DEFAULT_ENDING_YEAR - DEFAULT_STARTING_YEAR;
-
 export const createYearList = (
   toYear: number = DEFAULT_ENDING_YEAR,
   fromYear: number = DEFAULT_STARTING_YEAR,
@@ -85,3 +85,14 @@ export const createYearList = (
   }
   return outputYearList;
 };
+
+export const isSameDate = (firstDate: Date, secondDate: Date) => {
+  return (
+    firstDate.getDate() === secondDate.getDate() &&
+    firstDate.getMonth() === secondDate.getMonth() &&
+    firstDate.getFullYear() === secondDate.getFullYear()
+  );
+};
+
+export const formatDate = (date: Date) =>
+  `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;

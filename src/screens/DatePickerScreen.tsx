@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {getDefaultContainerStyle} from '../Utils/defaultStyles';
-import AppDatePicker from '../components/AppDatePicker';
+import AppDatePicker from '../components/DatePickers/AppDatePicker';
 import {useVisible} from '../Hooks/useVisible';
 import AppButton from '../components/AppButton';
 import {useColors} from '../config/useColors';

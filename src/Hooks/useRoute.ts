@@ -20,6 +20,13 @@ export const useRoute = () => {
       },
     },
     {
+      title: 'Multiple Date Picker with Modal',
+      iconName: 'calendar-range',
+      onPress: function () {
+        navigateToRoute(routeMap.multiCalendarWithModal);
+      },
+    },
+    {
       title: 'Date Picker',
       iconName: 'clock-edit-outline',
       onPress: function () {
