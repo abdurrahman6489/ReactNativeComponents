@@ -1,3 +1,7 @@
+import moment from 'moment';
+
+export const dayNameYearFormat = 'DD-MMM-YY';
+
 export const DEFAULT_STARTING_YEAR = 1900;
 export const DEFAULT_ENDING_YEAR = 2100;
 export const INITIAL_YEARS_COUNT = DEFAULT_ENDING_YEAR - DEFAULT_STARTING_YEAR;
@@ -95,4 +99,11 @@ export const isSameDate = (firstDate: Date, secondDate: Date) => {
 };
 
 export const formatDate = (date: Date) =>
-  `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+
+export const formatInReadableDate = (
+  date = new Date(),
+  format = dayNameYearFormat,
+) => {
+  return moment(date).format(format);
+};

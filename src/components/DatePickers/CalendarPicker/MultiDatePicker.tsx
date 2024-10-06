@@ -1,4 +1,4 @@
-import {View, Text, Animated, Easing} from 'react-native';
+import {View, Text, Animated, Easing, ScrollView} from 'react-native';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {
@@ -26,6 +26,8 @@ import {DefaultFooterProps} from '../DateCommonComponents/DefaultFooter';
 import RenderCurrentMonthDates from './RenderCurrentMonthDates';
 import FooterWrapper from '../DateCommonComponents/FooterWrapper';
 import {generateMonthAnimationFn} from '../Utils/DateAnimateFns';
+import ShowSelectedDates from './ShowSelectedDates';
+import ShowSelectedDatesWrapper from './ShowSelectedDatesWrapper';
 
 type CustomDateElementProps = {
   date: Date;
@@ -74,8 +76,6 @@ const AppMultiDatePicker = ({
     new Set(dates.map(formatDate)),
   );
 
-  console.log({selectedDates});
-
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const translateXAnim = useRef(new Animated.Value(0)).current;
   const monthListVisibility = useVisible();
@@ -113,6 +113,8 @@ const AppMultiDatePicker = ({
     () => generateMonthlyCalendar(),
     [yearInInitialDate, monthInInitialDate],
   );
+
+  const selectedDatesArray = useMemo(() => [...selectedDates], [selectedDates]);
 
   const getIsSelectedDate = (date: Date) => selectedDates.has(formatDate(date));
 
@@ -177,7 +179,6 @@ const AppMultiDatePicker = ({
       monthInInitialDate,
       Number(day),
     );
-    console.log({newDate});
     setInitialDateToRender(newDate);
     onDatePress(newDate);
     const formattedDate = formatDate(newDate);
@@ -206,6 +207,25 @@ const AppMultiDatePicker = ({
     return getShouldDateDisabled(
       new Date(yearInInitialDate, monthInInitialDate, Number(day)),
     );
+  };
+
+  const handleSelectedDatesPress = (date: string) => {
+    const newDate = new Date(date);
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth();
+    const dateInNumber = newDate.getDate();
+    handleOnMonthPress(month);
+    if (yearInInitialDate !== year) {
+      setInitialDateToRender(new Date(year, monthInInitialDate, dateInNumber));
+    }
+  };
+
+  const handleDeleteFromSelectedDates = (date: string) => {
+    if (!selectedDates.has(date)) return;
+    setSelectedDate(prev => {
+      prev.delete(date);
+      return new Set(prev);
+    });
   };
 
   const handleRenderCustomDateElement = () => {
@@ -281,6 +301,11 @@ const AppMultiDatePicker = ({
           />
         </Animated.View>
       )}
+      <ShowSelectedDatesWrapper
+        dates={selectedDatesArray}
+        onDatePress={handleSelectedDatesPress}
+        onDelete={handleDeleteFromSelectedDates}
+      />
       <MonthNavigator
         monthsArray={monthsArray}
         monthInInitialDate={monthInInitialDate}

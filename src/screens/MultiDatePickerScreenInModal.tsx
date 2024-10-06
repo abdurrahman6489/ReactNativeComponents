@@ -22,10 +22,15 @@ const MultiDatePickerScreenInModal = () => {
     calendarVisibility.close();
   };
 
+  const handleOpenModal = () => {
+    calendarVisibility.open();
+    // setSelectedDates([]);
+  };
+
   return (
     <>
       <View style={[styles.container, {backgroundColor: lightModeColor}]}>
-        <AppButton onPress={calendarVisibility.open}>{'Select Date'}</AppButton>
+        <AppButton onPress={handleOpenModal}>{'Select Date'}</AppButton>
         <AppModal
           visible={calendarVisibility.isVisible}
           onDismiss={calendarVisibility.close}
