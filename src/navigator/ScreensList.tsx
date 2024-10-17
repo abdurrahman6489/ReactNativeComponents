@@ -6,6 +6,7 @@ import CalendarListScreen from '../screens/CalendarScreen';
 import DatePickerScreen from '../screens/DatePickerScreen';
 import CalendarScreenInModal from '../screens/CalendarScreenInModal';
 import MultiDatePickerScreenInModal from '../screens/MultiDatePickerScreenInModal';
+import DateRangePickerScreenInModal from '../screens/DateRangePickerWithModal';
 
 type ScreenObjType = {
   name: string;
@@ -35,6 +36,11 @@ export const ScreenList: ScreenObjType[] = [
     name: routeMap.calendarWithModal,
     Component: CalendarScreenInModal,
     options: {title: 'Calendar In Modal'},
+  },
+  {
+    name: routeMap.dateRangePickerWithModal,
+    Component: DateRangePickerScreenInModal,
+    options: {title: 'Date Range In Modal'},
   },
   {
     name: routeMap.multiCalendarWithModal,
