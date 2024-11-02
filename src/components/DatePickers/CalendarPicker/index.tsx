@@ -34,6 +34,12 @@ type CustomDateElementProps = {
   onDayPress: (date: Date) => void;
 };
 
+export type markedDateStyle = {
+  isMarked: boolean;
+  markedColor: string;
+  selectedDateMarkedColor: string;
+};
+
 type AppCalendarPickerProps = {
   date: Date;
   initialDate?: Date;
@@ -44,6 +50,7 @@ type AppCalendarPickerProps = {
   onMonthPress?: (date: Date) => void;
   onYearPress?: (date: Date) => void;
   getShouldDateDisabled?: (date: Date) => boolean;
+  getMarkedStyle?: (date: Date) => markedDateStyle;
   renderCustomFooter?:
     | null
     | ((props: DefaultFooterProps) => React.JSX.Element);
@@ -55,10 +62,15 @@ type AppCalendarPickerProps = {
 const AppCalendarPicker = ({
   initialDate = new Date(),
   isFooterRequired = true,
-  getShouldDateDisabled = (date: Date) => false,
   renderCustomFooter = null,
   onSelectDate,
   onCancel,
+  getShouldDateDisabled = (date: Date) => false,
+  getMarkedStyle = (date: Date) => ({
+    isMarked: false,
+    markedColor: '',
+    selectedDateMarkedColor: '',
+  }),
   onDatePress = (date: Date) => {},
   onMonthPress = (date: Date) => {},
   onYearPress = (date: Date) => {},
@@ -110,10 +122,14 @@ const AppCalendarPicker = ({
     [yearInInitialDate, monthInInitialDate],
   );
 
+  const getCurrentDate = (day: string) => {
+    return new Date(yearInInitialDate, monthInInitialDate, Number(day));
+  };
+
   const getIsSelectedDate = (date: Date) => isSameDate(date, selectedData);
 
   const handleGetIsSelectedDate = (day: string) => {
-    const date = new Date(yearInInitialDate, monthInInitialDate, Number(day));
+    const date = getCurrentDate(day);
     return getIsSelectedDate(date);
   };
 
@@ -316,6 +332,8 @@ const AppCalendarPicker = ({
             monthlyArray={monthlyArray}
             checkIsDateDisabled={handleCheckIsDateDisabled}
             renderCustomDayElement={handleRenderCustomDateElement()}
+            getMarkedStyle={getMarkedStyle}
+            getCurrentDate={getCurrentDate}
           />
           <FooterWrapper
             handleSelectDate={handleSelectDate}

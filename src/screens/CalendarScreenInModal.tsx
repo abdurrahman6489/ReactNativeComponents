@@ -1,6 +1,8 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import AppCalendarPicker from '../components/DatePickers/CalendarPicker';
+import AppCalendarPicker, {
+  markedDateStyle,
+} from '../components/DatePickers/CalendarPicker';
 import AppButton from '../components/AppButton';
 import AppModal from '../components/AppModal';
 import {useVisible} from '../Hooks/useVisible';
@@ -10,8 +12,9 @@ import {Text} from 'react-native-paper';
 
 const CalendarScreenInModal = () => {
   const calendarVisibility = useVisible();
-  const {lightModeColor, darkModeColor} = useColors();
+  const {lightModeColor, darkModeColor, primary, secondary} = useColors();
   const [selectedDate, setSelectedDate] = useState(new Date());
+
   const onSelectDate = (date: Date) => {
     setSelectedDate(date);
     calendarVisibility.close();
@@ -20,6 +23,16 @@ const CalendarScreenInModal = () => {
   const onCancel = () => {
     setSelectedDate(new Date());
     calendarVisibility.close();
+  };
+
+  const markTheDateWithDot = (date: Date): markedDateStyle => {
+    return date.getDay() === 0
+      ? {
+          isMarked: true,
+          markedColor: primary,
+          selectedDateMarkedColor: lightModeColor,
+        }
+      : {isMarked: false, markedColor: '', selectedDateMarkedColor: ''};
   };
 
   return (
@@ -39,6 +52,7 @@ const CalendarScreenInModal = () => {
             date={selectedDate}
             onSelectDate={onSelectDate}
             onCancel={onCancel}
+            getMarkedStyle={markTheDateWithDot}
           />
         </AppModal>
         <Text
