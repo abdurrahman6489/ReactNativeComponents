@@ -1,48 +1,42 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import WeekContainer from '../DateCommonComponents/WeekContainer';
-import DayContainer from './DayContainer';
-import {markedDateStyle} from '../DateCommonComponents/types';
+import DateRangeDayContainer from './DateRangeDayContainer';
 
-type RenderCurrentMonthDatesProps = {
+type DateRangeRenderCurrentMonthDatesProps = {
   monthlyArray: string[][];
   getCurrentDate: (day: string) => Date;
-  getIsSelectedDate: (date: string) => boolean;
+  getIsInDateRange: (date: string) => boolean;
+  getIsStartOfRange: (date: string) => boolean;
+  getIsEndOFRange: (date: string) => boolean;
   handleDatePress: (day: string) => void;
   checkIsDateDisabled?: (day: string) => boolean;
   renderCustomDayElement?: ((date: string) => React.JSX.Element) | null;
-  getMarkedStyle?: (date: Date) => markedDateStyle;
 };
 
-const RenderCurrentMonthDates = ({
+const DateRangeRenderCurrentMonthDates = ({
   monthlyArray,
-  getIsSelectedDate,
   handleDatePress,
-  checkIsDateDisabled = (day: string) => false,
-  getMarkedStyle = (date: Date) => ({
-    isMarked: false,
-    markedColor: '',
-    selectedDateMarkedColor: '',
-  }),
   getCurrentDate,
+  getIsEndOFRange,
+  getIsInDateRange,
+  getIsStartOfRange,
+  checkIsDateDisabled = (day: string) => false,
   renderCustomDayElement = null,
-}: RenderCurrentMonthDatesProps) => {
-  const handleMarkedStyle = (day: string) => {
-    const date = getCurrentDate(day);
-    return getMarkedStyle(date);
-  };
+}: DateRangeRenderCurrentMonthDatesProps) => {
   return monthlyArray.map((weeklyArray, weekIndex) => {
     return (
       <WeekContainer key={`${weekIndex}-weekList`}>
         {weeklyArray.map((day, index) => {
           return !renderCustomDayElement ? (
-            <DayContainer
+            <DateRangeDayContainer
               key={`${day}/${index}`}
               day={day}
               isDisabled={checkIsDateDisabled(day)}
-              isSelected={getIsSelectedDate(day)}
               onDayPress={handleDatePress}
-              getMarkedStyle={handleMarkedStyle}
+              isEndOfRange={getIsEndOFRange(day)}
+              isInRange={getIsInDateRange(day)}
+              isStartOfRange={getIsStartOfRange(day)}
             />
           ) : (
             renderCustomDayElement(day)
@@ -53,6 +47,6 @@ const RenderCurrentMonthDates = ({
   });
 };
 
-export default RenderCurrentMonthDates;
+export default DateRangeRenderCurrentMonthDates;
 
 const styles = StyleSheet.create({});

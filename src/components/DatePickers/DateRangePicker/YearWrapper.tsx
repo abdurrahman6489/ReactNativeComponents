@@ -15,5 +15,6 @@ export default YearWrapper;
 const styles = StyleSheet.create({
   container: {
     ...getDefaultFlexStyles().flexRowStyles,
+    justifyContent: 'space-evenly',
   },
 });

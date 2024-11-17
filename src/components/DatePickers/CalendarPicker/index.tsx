@@ -26,19 +26,12 @@ import {DefaultFooterProps} from '../DateCommonComponents/DefaultFooter';
 import ShowSelectedDate from './components/ShowSelectedDate';
 import RenderCurrentMonthDates from './RenderCurrentMonthDates';
 import FooterWrapper from '../DateCommonComponents/FooterWrapper';
-
-type CustomDateElementProps = {
-  date: Date;
-  isSelected: boolean;
-  isDisabled: boolean;
-  onDayPress: (date: Date) => void;
-};
-
-export type markedDateStyle = {
-  isMarked: boolean;
-  markedColor: string;
-  selectedDateMarkedColor: string;
-};
+import ShowSelectedYearText from './ShowSelectedYearText';
+import {useColors} from '../../../config/useColors';
+import {
+  CustomDateElementProps,
+  markedDateStyle,
+} from '../DateCommonComponents/types';
 
 type AppCalendarPickerProps = {
   date: Date;
@@ -84,6 +77,7 @@ const AppCalendarPicker = ({
     ending: DEFAULT_ENDING_YEAR,
   });
   const [selectedData, setSelectedDate] = useState(() => initialDate);
+  const {light} = useColors();
   const scaleAnim = useRef(new Animated.Value(0)).current;
   const translateXAnim = useRef(new Animated.Value(0)).current;
   const monthListVisibility = useVisible();
@@ -294,10 +288,12 @@ const AppCalendarPicker = ({
     </View>
   ) : (
     <>
-      <YearNavigator
-        currentYear={yearInInitialDate}
-        onYearPress={yearListVisibility.toggle}
-      />
+      <YearNavigator onYearPress={yearListVisibility.toggle}>
+        <ShowSelectedYearText
+          currentYear={yearInInitialDate}
+          style={{color: light}}
+        />
+      </YearNavigator>
       <ShowSelectedDate selectedDate={selectedData} />
       {monthListVisibility.isVisible && (
         <Animated.View

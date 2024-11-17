@@ -9,44 +9,50 @@ import {
 } from 'react-native';
 import React from 'react';
 import {useColors} from '../../../config/useColors';
-import {getTestBorderStyles} from '../../../Utils/defaultStyles';
-import {markedDateStyle} from '../DateCommonComponents/types';
+import {isSameDate} from '../Utils/DateUtilFunctions';
 
-type dayContainerProps = {
+type DateRangeDayContainerProps = {
   day: string;
-  isSelected: boolean;
+  isInRange: boolean;
+  isStartOfRange: boolean;
+  isEndOfRange: boolean;
   isDisabled?: boolean;
-  getMarkedStyle: (day: string) => markedDateStyle;
   onDayPress: (day: string) => void;
 };
 
-const DayContainer = ({
+const DateRangeDayContainer = ({
   day,
-  isSelected,
+  isStartOfRange,
+  isInRange,
+  isEndOfRange,
   isDisabled = false,
-  getMarkedStyle,
   onDayPress,
-}: dayContainerProps) => {
+}: DateRangeDayContainerProps) => {
   const WrapperComponent = isDisabled ? Pressable : TouchableOpacity;
   const {primary, light, lightGray, darkModeColor} = useColors();
 
-  const markedStyle = getMarkedStyle(day);
-  const {isMarked, markedColor, selectedDateMarkedColor} = markedStyle;
+  const isSelectedDay = isStartOfRange || isInRange || isEndOfRange;
+  const selectedStyle: ViewStyle = {backgroundColor: primary};
 
-  const dateStyle: ViewStyle =
-    isSelected && !isDisabled ? {backgroundColor: primary} : {};
+  const dateStyle: ViewStyle = isDisabled
+    ? {}
+    : isStartOfRange
+    ? {...selectedStyle, ...styles.startRangeStyle}
+    : isEndOfRange
+    ? {...selectedStyle, ...styles.endRangeStyle}
+    : isInRange
+    ? {...selectedStyle}
+    : {};
 
-  const dateTextStyle: TextStyle = {color: isSelected ? light : darkModeColor};
+  const dateTextStyle: TextStyle = {
+    color: isSelectedDay ? light : darkModeColor,
+  };
 
   const disabledTextStyle: TextStyle = isDisabled ? {color: lightGray} : {};
 
   const handleDayPress = () => {
     if (!day || isDisabled) return;
     onDayPress(day);
-  };
-
-  const dotStyle: ViewStyle = {
-    backgroundColor: isSelected ? selectedDateMarkedColor : markedColor,
   };
 
   return (
@@ -56,12 +62,11 @@ const DayContainer = ({
       <Text style={[styles.dateTextStyle, dateTextStyle, disabledTextStyle]}>
         {day}
       </Text>
-      {isMarked ? <View style={[styles.dotStyle, dotStyle]}></View> : null}
     </WrapperComponent>
   );
 };
 
-export default DayContainer;
+export default DateRangeDayContainer;
 
 const styles = StyleSheet.create({
   dateStyle: {
@@ -69,7 +74,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexBasis: 5,
     padding: 5,
-    borderRadius: 15,
     position: 'relative',
     display: 'flex',
     flexDirection: 'row',
@@ -77,11 +81,6 @@ const styles = StyleSheet.create({
     // ...getTestBorderStyles(1, 'black'),
   },
   dateTextStyle: {textAlign: 'center'},
-  dotStyle: {
-    position: 'absolute',
-    bottom: 1,
-    width: 3,
-    height: 3,
-    borderRadius: 20,
-  },
+  startRangeStyle: {borderTopLeftRadius: 15, borderBottomLeftRadius: 15},
+  endRangeStyle: {borderTopRightRadius: 15, borderBottomRightRadius: 15},
 });

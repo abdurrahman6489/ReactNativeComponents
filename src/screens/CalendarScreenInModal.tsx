@@ -1,14 +1,13 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
-import AppCalendarPicker, {
-  markedDateStyle,
-} from '../components/DatePickers/CalendarPicker';
+import AppCalendarPicker from '../components/DatePickers/CalendarPicker';
 import AppButton from '../components/AppButton';
 import AppModal from '../components/AppModal';
 import {useVisible} from '../Hooks/useVisible';
 import {getDefaultContainerStyle} from '../Utils/defaultStyles';
 import {useColors} from '../config/useColors';
 import {Text} from 'react-native-paper';
+import {markedDateStyle} from '../components/DatePickers/DateCommonComponents/types';
 
 const CalendarScreenInModal = () => {
   const calendarVisibility = useVisible();

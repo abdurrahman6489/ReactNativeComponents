@@ -1,20 +1,18 @@
-import {StyleSheet, Text, TouchableOpacity, ViewStyle} from 'react-native';
+import {StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
 import {useColors} from '../../../config/useColors';
-import {getTestBorderStyles} from '../../../Utils/defaultStyles';
-import ShowSelectedYearText from './ShowSelectedYearText';
 
-type YearNavigatorProps = {
-  onYearPress: () => void;
-  style?: ViewStyle;
+type DateRangeYearNavigatorContainerProps = {
   children: ReactNode;
+  style?: ViewStyle;
+  onYearPress: () => void;
 } & ViewStyle;
 
-const YearNavigator = ({
+const DateRangeYearNavigatorContainer = ({
   onYearPress,
   style = {},
   children,
-}: YearNavigatorProps) => {
+}: DateRangeYearNavigatorContainerProps) => {
   const {primary} = useColors();
   return (
     <TouchableOpacity
@@ -25,12 +23,15 @@ const YearNavigator = ({
   );
 };
 
-export default YearNavigator;
+export default DateRangeYearNavigatorContainer;
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
     flexGrow: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
+
     // ...getTestBorderStyles(),
   },
 });
